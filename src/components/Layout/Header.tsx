@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection }) => {
             <div className="w-10 h-10 bg-gradient-to-br from-sky-400 to-sky-600 rounded-lg flex items-center justify-center">
               <Youtube className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold text-gray-800">Abbas Stock</span>
+            <span className="text-xl font-bold text-gray-800">Abbas</span>
           </motion.div>
 
           {/* Desktop Navigation */}
