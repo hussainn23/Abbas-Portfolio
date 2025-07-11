@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             >
               Hi, I'm{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">
-                Ghulam Abbas
+                 Abbas
               </span>
             </motion.h1>
 
@@ -158,7 +158,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/assets/images/abbas.jpg"
+                  src="assets/images/abbas.jpg"
                   alt="Abbas Stock"
                   className="w-full h-full object-cover"
                 />
