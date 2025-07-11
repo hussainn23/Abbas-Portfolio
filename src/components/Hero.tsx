@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             >
               Hi, I'm{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">
-                Abbas Stock
+                Abbas 
               </span>
             </motion.h1>
 
@@ -131,6 +131,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
+              //
               <div>
                 <span className="block text-2xl font-bold text-gray-800">500+</span>
                 <span>Happy Clients</span>
