@@ -84,7 +84,7 @@ const Testimonials: React.FC = () => {
                   transition={{ delay: 0.2 }}
                 >
                   <img
-                    src={testimonials[currentIndex].avatar}
+                     src="/assets/images/user.png"
                     alt={testimonials[currentIndex].name}
                     className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
                   />

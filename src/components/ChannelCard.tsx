@@ -64,10 +64,7 @@ const ChannelCard: React.FC<ChannelCardProps> = ({ channel, onViewDetails, index
           )}
         </div>
 
-        {/* Price */}
-        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1">
-          <span className="text-sm font-bold text-gray-800">${formatNumber(channel.salePrice)}</span>
-        </div>
+       
       </div>
 
       {/* Content */}
@@ -95,7 +92,7 @@ const ChannelCard: React.FC<ChannelCardProps> = ({ channel, onViewDetails, index
               <div className="text-sm font-semibold text-gray-800">
                 {formatNumber(channel.totalViews)}
               </div>
-              <div className="text-xs text-gray-500">Total Views</div>
+              <div className="text-xs text-gray-500">Real Time Views</div>
             </div>
           </div>
         </div>
@@ -103,7 +100,7 @@ const ChannelCard: React.FC<ChannelCardProps> = ({ channel, onViewDetails, index
         {/* Profit Indicator */}
         <div className="bg-sky-50 rounded-lg p-3 mb-6">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">Potential Profit</span>
+            <span className="text-sm text-gray-600">Sale Price</span>
             <span className="text-sm font-bold text-green-600">
               ${formatNumber(channel.salePrice - channel.purchasePrice)}
             </span>

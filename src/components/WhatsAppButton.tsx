@@ -9,7 +9,7 @@ const WhatsAppButton: React.FC = () => {
     const message = encodeURIComponent(
       "Hi Abbas! I'm interested in your YouTube channels. Can you help me find the right one for my needs?"
     );
-    window.open(`https://wa.me/1234567890?text=${message}`, '_blank');
+   window.open(`https://wa.me/923499891325?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (

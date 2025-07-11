@@ -11,7 +11,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     const message = encodeURIComponent(
       "Hi Abbas! I'm interested in your YouTube channels. Can you help me find the right one for my needs?"
     );
-    window.open(`https://wa.me/1234567890?text=${message}`, '_blank');
+    window.open(`https://wa.me/923499891325?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             >
               Hi, I'm{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">
-                Abbas Stock
+                Ghulam Abbas
               </span>
             </motion.h1>
 
@@ -139,10 +139,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <span className="block text-2xl font-bold text-gray-800">$2M+</span>
                 <span>Total Sales</span>
               </div>
-              <div>
-                <span className="block text-2xl font-bold text-gray-800">5★</span>
-                <span>Rating</span>
-              </div>
+             
             </motion.div>
           </motion.div>
 
@@ -161,7 +158,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop"
+                  src="/assets/images/abbas.jpg"
                   alt="Abbas Stock"
                   className="w-full h-full object-cover"
                 />
