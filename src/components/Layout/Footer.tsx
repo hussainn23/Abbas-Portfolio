@@ -95,6 +95,7 @@ const Footer: React.FC = () => {
           </motion.div>
         </div>
 
+//
         <motion.div 
           className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400"
           initial={{ opacity: 0 }}
