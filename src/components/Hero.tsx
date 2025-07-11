@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             >
               Hi, I'm{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">
-                 Abbas
+                Abbas
               </span>
             </motion.h1>
 
@@ -139,7 +139,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <span className="block text-2xl font-bold text-gray-800">$2M+</span>
                 <span>Total Sales</span>
               </div>
-             
+
             </motion.div>
           </motion.div>
 
@@ -157,11 +157,17 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
+
+
+
                 <img
-                  src="assets/images/abbas.jpg"
-                  alt="Abbas Stock"
+                  src="https://firebasestorage.googleapis.com/v0/b/inner-bliss-65eb3.appspot.com/o/channel_screenshots%2Fabbas.jpg?alt=media&token=b8406538-a43f-4fc8-b502-2eb6cd984dd1"
+                  alt="Abbas Image"
                   className="w-full h-full object-cover"
                 />
+
+
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </motion.div>
 
