@@ -1,55 +1,71 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Search,
-  Filter,
-  TrendingUp,
-  Users,
-  Eye,
-  DollarSign,
-} from "lucide-react";
-import { channels, Channel } from "../data/channels";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase.ts";
 import ChannelCard from "./ChannelCard";
-import ChannelModal from "./ChannelModal";
+import { Filter, DollarSign } from "lucide-react";
+import ChannelModal from "./ChannelModal.tsx";
+import { Channel } from "../data/channels.ts";
+
 
 const ChannelGrid: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState<
-    "all" | "available" | "sold"
-  >("all");
-  const [filterMonetization, setFilterMonetization] = useState<
-    "all" | "monetized" | "non-monetized"
-  >("all");
+  const [channels, setChannels] = useState<Channel[]>([]);
+  const [filterStatus, setFilterStatus] = useState<"all" | "available" | "sold">("all");
+  const [filterMonetization, setFilterMonetization] = useState<"all" | "monetized" | "non-monetized">("all");
   const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
 
-  const filteredChannels = channels.filter((channel) => {
-    const matchesSearch =
-      channel.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      channel.niche.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter =
-      filterStatus === "all" || channel.status === filterStatus;
-    const matchesMonetization =
-      filterMonetization === "all" ||
-      (filterMonetization === "monetized" && channel.isMonetized) ||
-      (filterMonetization === "non-monetized" && !channel.isMonetized);
-    return matchesSearch && matchesFilter && matchesMonetization;
-  });
+  useEffect(() => {
+    const fetchChannels = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "channels"));
+        const channelArray: Channel[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            channelName: data.channelName || "",
+            channelNiche: data.channelNiche || "",
+            channelSubscribers: data.channelSubscribers || "0",
+            realtimeViews: data.realtimeViews || "0",
+            salePrice: data.salePrice || "0",
+            verificationStatus: data.verificationStatus || "",
+            monetizationStatus: data.monetizationStatus || "",
+            status: data.status || "",
+            screenshotUrls: data.screenshotUrls || "",
+            watchTime:data.watchTime,
+            earningData:data.earningData,
+            channelAge:data.channelAge,
+            contentType:data.contentType,
+            violation:data.violation,
+            purchasePrice:data.purchasePrice,
+            channelUrl:data.channelUrl,
+            adsenseType: data.adsenseType || "", 
+            channelProfile:data.channelProfile
+          };
+        });
+        setChannels(channelArray);
+        console.log("Fetched Channels:", channelArray);
+      } catch (error) {
+        console.error("Error fetching channels:", error);
+      }
+    };
 
-  const stats = {
-    totalChannels: channels.length,
-    totalSubscribers: channels.reduce(
-      (sum, channel) => sum + channel.subscribers,
-      0
-    ),
-    totalViews: channels.reduce((sum, channel) => sum + channel.totalViews, 0),
-    totalValue: channels.reduce((sum, channel) => sum + channel.salePrice, 0),
-  };
+    fetchChannels();
+  }, []);
 
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
-    if (num >= 1000) return (num / 1000).toFixed(1) + "K";
-    return num.toString();
-  };
+const filteredChannels = channels.filter((channel) => {
+ const statusMatch =
+    filterStatus === "all" ||
+    (filterStatus === "sold" && channel.status === "purchased") ||
+    (filterStatus === "available" && channel.status !== "purchased");
+
+  const monetizationMatch =
+    filterMonetization === "all" ||
+    (filterMonetization === "monetized" && channel.monetizationStatus === "Monetized") ||
+    (filterMonetization === "non-monetized" && channel.monetizationStatus !== "Monetized");
+
+  return statusMatch && monetizationMatch;
+});
+
 
   return (
     <div className="py-20 bg-gray-50">
@@ -69,6 +85,7 @@ const ChannelGrid: React.FC = () => {
           </p>
         </motion.div>
 
+        {/*Filters Section */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8"
           initial={{ opacity: 0, y: 20 }}
@@ -77,17 +94,18 @@ const ChannelGrid: React.FC = () => {
         >
           <div className="relative col-span-1 md:col-span-1 lg:col-span-3">
             <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <select
-              className="w-full pl-10 pr-8 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-white"
-              value={filterStatus}
-              onChange={(e) =>
-                setFilterStatus(e.target.value as "all" | "available" | "sold")
-              }
-            >
-              <option value="all">All Channels</option>
-              <option value="available">Available</option>
-              <option value="sold">Sold</option>
-            </select>
+           <select
+  className="w-full pl-10 pr-8 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-white"
+  value={filterStatus}
+  onChange={(e) =>
+    setFilterStatus(e.target.value as "all" | "available" | "sold")
+  }
+>
+  <option value="all">All Channels</option>
+  <option value="available">Available</option>
+  <option value="sold">Sold</option> {/* NOT purchased */}
+</select>
+
           </div>
 
           <div className="relative col-span-1 md:col-span-1 lg:col-span-3">
@@ -108,39 +126,40 @@ const ChannelGrid: React.FC = () => {
           </div>
         </motion.div>
 
+        {/*  Cards Grid */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          {filteredChannels.map((channel, index) => (
+          {filteredChannels.map((channel) => (
             <ChannelCard
               key={channel.id}
-              channel={channel}
-              onViewDetails={setSelectedChannel}
-              index={index}
+              channelProfile={channel.channelProfile}
+              screenshotUrls={channel.screenshotUrls}
+              channelName={channel.channelName}
+              channelNiche={channel.channelNiche}
+              channelSubscribers={channel.channelSubscribers}
+              realtimeViews={channel.realtimeViews}
+              salePrice={channel.salePrice}
+              status={channel.status}
+              verificationStatus={channel.verificationStatus}
+              monetizationStatus={channel.monetizationStatus}
+              onViewDetails={() => setSelectedChannel(channel)}
             />
           ))}
         </motion.div>
-
-        {filteredChannels.length === 0 && (
-          <motion.div
-            className="text-center py-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <div className="text-gray-400 text-lg">
-              No channels found matching your criteria.
-            </div>
-          </motion.div>
-        )}
+        
       </div>
+      {selectedChannel && (
+  <ChannelModal
+    channel={selectedChannel}
+    onClose={() => setSelectedChannel(null)}
+  />
+)}
 
-      <ChannelModal
-        channel={selectedChannel}
-        onClose={() => setSelectedChannel(null)}
-      />
+    
     </div>
   );
 };

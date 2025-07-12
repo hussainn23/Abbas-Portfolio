@@ -1,33 +1,68 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Users, Eye, Clock, DollarSign, CheckCircle, Badge, MessageCircle, ExternalLink, Calendar, Shield } from 'lucide-react';
-import { Channel } from '../data/channels';
+import { Channel } from "../data/channels.ts";
 
 interface ChannelModalProps {
-  channel: Channel | null;
+  channel: Channel |null;
   onClose: () => void;
 }
 
 const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
   if (!channel) return null;
+  console.log('this is from channelmodel',channel)
 
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-    return num.toString();
+ const formatNumber = (num: string | number) => {
+    const parsed = typeof num === 'string' ? parseFloat(num.replace(/,/g, '')) : num;
+    if (isNaN(parsed)) return '0';
+    if (parsed >= 1000000) return (parsed / 1000000).toFixed(1) + 'M';
+    if (parsed >= 1000) return (parsed / 1000).toFixed(1) + 'K';
+    return parsed.toString();
   };
+//  const calculateChannelAge = (creationDate: string | Date): string => {
+//   const createdDate = new Date(creationDate);
+//   const currentDate = new Date();
+  
+//   // Calculate total difference in milliseconds
+//   const diffTime = Math.abs(currentDate.getTime() - createdDate.getTime());
+  
+//   // Calculate years
+//   const years = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
+//   const remainingAfterYears = diffTime % (1000 * 60 * 60 * 24 * 365);
+  
+//   // Calculate months
+//   const months = Math.floor(remainingAfterYears / (1000 * 60 * 60 * 24 * 30));
+//   const remainingAfterMonths = remainingAfterYears % (1000 * 60 * 60 * 24 * 30);
+  
+//   // Calculate days
+//   const days = Math.floor(remainingAfterMonths / (1000 * 60 * 60 * 24));
 
+//   // Format output
+//   if (years > 0) {
+//     if (months > 0) {
+//       return `${years} ${years === 1 ? 'year' : 'years'} ${months} ${months === 1 ? 'month' : 'months'}`;
+//     }
+//     return `${years} ${years === 1 ? 'year' : 'years'}`;
+//   } else if (months > 0) {
+//     if (days > 0) {
+//       return `${months} ${months === 1 ? 'month' : 'months'} ${days} ${days === 1 ? 'day' : 'days'}`;
+//     }
+//     return `${months} ${months === 1 ? 'month' : 'months'}`;
+//   } else {
+//     return `${days} ${days === 1 ? 'day' : 'days'}`;
+//   }
+// };
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent(
-      `Hi Abbas! I'm interested in purchasing the "${channel.name}" channel. Can we discuss the details?`
+      `Hi Abbas! I'm interested in purchasing the "${channel.channelName}" channel. Can we discuss the details?`
     );
     window.open(`https://wa.me/1234567890?text=${message}`, '_blank');
   };
 
-  const profit = channel.salePrice - channel.purchasePrice;
-  const profitPercent = ((profit / channel.purchasePrice) * 100).toFixed(1);
+
 
   return (
+    
     <AnimatePresence>
       <motion.div
         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
@@ -46,17 +81,18 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
           {/* Header */}
           <div className="relative">
             <img
-              src={channel.thumbnail}
-              alt={channel.name}
+              src={channel.channelProfile}
+              alt={channel.channelName}
               className="w-full h-64 object-cover rounded-t-2xl"
             />
+     
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-t-2xl" />
             
             {/* Status Banner */}
             <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold text-white ${
-              channel.status === 'sold' ? 'bg-red-500' : 'bg-green-500'
+              channel.status === 'purchased' ? 'bg-green-500' : 'bg-red-500'
             }`}>
-              {channel.status === 'sold' ? 'SOLD' : 'AVAILABLE'}
+              {channel.status === 'purchased' ?'AVAILABLE' :'SOLD' }
             </div>
 
             {/* Close Button */}
@@ -69,21 +105,31 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
 
             {/* Title Overlay */}
             <div className="absolute bottom-4 left-4 right-4">
-              <h2 className="text-2xl font-bold text-white mb-2">{channel.name}</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">{channel.channelName}</h2>
               <div className="flex items-center space-x-2">
                 <span className="bg-sky-500 text-white px-2 py-1 rounded text-sm font-medium">
-                  {channel.niche}
+                  {channel.channelNiche||"General"}
                 </span>
-                {channel.isMonetized && (
+                {channel.monetizationStatus === 'Monetized' ? (
                   <span className="bg-green-500 text-white px-2 py-1 rounded text-sm font-medium flex items-center space-x-1">
                     <CheckCircle className="w-3 h-3" />
                     <span>Monetized</span>
                   </span>
+                ):(
+                    <span className="bg-red-500 text-white px-2 py-1 rounded text-sm font-medium flex items-center space-x-1">
+                    <CheckCircle className="w-3 h-3" />
+                    <span>Not Monetized</span>
+                  </span>
                 )}
-                {channel.isVerified && (
+                {channel.verificationStatus === 'Verified' ?(
                   <span className="bg-blue-500 text-white px-2 py-1 rounded text-sm font-medium flex items-center space-x-1">
                     <Badge className="w-3 h-3" />
                     <span>Verified</span>
+                  </span>
+                ):(
+                   <span className="bg-gray-400 text-white px-2 py-1 rounded text-sm font-medium flex items-center space-x-1">
+                    <Badge className="w-3 h-3" />
+                    <span>Not Verified</span>
                   </span>
                 )}
               </div>
@@ -96,22 +142,26 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-gray-50 rounded-xl p-4 text-center">
                 <Users className="w-8 h-8 text-sky-500 mx-auto mb-2" />
-                <div className="text-lg font-bold text-gray-800">{formatNumber(channel.subscribers)}</div>
+            
+                <div className="text-lg font-bold text-gray-800">{formatNumber(channel.channelSubscribers)}</div>
                 <div className="text-sm text-gray-500">Subscribers</div>
               </div>
               <div className="bg-gray-50 rounded-xl p-4 text-center">
                 <Eye className="w-8 h-8 text-sky-500 mx-auto mb-2" />
-                <div className="text-lg font-bold text-gray-800">{formatNumber(channel.totalViews)}</div>
+              
+                  <div className="text-lg font-bold text-gray-800">{channel.realtimeViews}</div>
                 <div className="text-sm text-gray-500">Total Views</div>
               </div>
               <div className="bg-gray-50 rounded-xl p-4 text-center">
                 <Clock className="w-8 h-8 text-sky-500 mx-auto mb-2" />
-                <div className="text-lg font-bold text-gray-800">{formatNumber(channel.watchTime)}</div>
+             
+                <div className="text-lg font-bold text-gray-800">{channel.watchTime||0}</div>
                 <div className="text-sm text-gray-500">Watch Time (hrs)</div>
               </div>
               <div className="bg-gray-50 rounded-xl p-4 text-center">
                 <DollarSign className="w-8 h-8 text-sky-500 mx-auto mb-2" />
-                <div className="text-lg font-bold text-gray-800">${formatNumber(channel.earnings)}</div>
+            
+                <div className="text-lg font-bold text-gray-800">{channel.earningData||0}</div>
                 <div className="text-sm text-gray-500">Monthly Earnings</div>
               </div>
             </div>
@@ -124,7 +174,8 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Realtime Views</span>
-                    <span className="font-medium">{formatNumber(channel.realtimeViews)}</span>
+             
+                      <span className="font-medium">{channel.realtimeViews}</span> 
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Channel Age</span>
@@ -138,14 +189,14 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
                     <span className="font-medium">{channel.contentType}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600">AdSense Type</span>
+                    <span className="text-gray-600">AdSense Button</span>
                     <span className="font-medium">{channel.adsenseType}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Violation Status</span>
                     <div className="flex items-center space-x-1">
                       <Shield className="w-4 h-4 text-green-500" />
-                      <span className="font-medium text-green-600">{channel.violationStatus}</span>
+                      <span className="font-medium text-green-600">{channel.violation}</span>
                     </div>
                   </div>
                 </div>
@@ -158,22 +209,10 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Purchase Price</span>
-                      <span className="font-medium">${formatNumber(channel.purchasePrice)}</span>
+              
+                      <span className="font-medium">${channel.purchasePrice}</span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Sale Price</span>
-                      <span className="font-bold text-lg">${formatNumber(channel.salePrice)}</span>
-                    </div>
-                    <div className="border-t border-gray-200 pt-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Profit</span>
-                        <span className="font-bold text-green-600">${formatNumber(profit)}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">ROI</span>
-                        <span className="font-medium text-green-600">{profitPercent}%</span>
-                      </div>
-                    </div>
+                
                   </div>
                 </div>
               </div>
@@ -190,15 +229,19 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
                 <MessageCircle className="w-5 h-5" />
                 <span>Contact on WhatsApp</span>
               </motion.button>
-              
-              <motion.button
-                className="flex-1 bg-sky-50 text-sky-600 px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 hover:bg-sky-100 transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <ExternalLink className="w-5 h-5" />
-                <span>View Channel</span>
-              </motion.button>
+            
+        <motion.button
+  onClick={() => window.open(channel.channelUrl, '_blank')}
+  className="flex-1 bg-sky-50 text-sky-600 px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 hover:bg-sky-100 transition-colors"
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+>
+  <div className="flex items-center justify-center space-x-2">
+    <ExternalLink className="w-5 h-5" />
+    <span>View Channel</span>
+  </div>
+</motion.button>
+             
             </div>
           </div>
         </motion.div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play, MessageCircle, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface HeroProps {
   onNavigate: (section: string) => void;
@@ -102,18 +103,20 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-            >
+            >  <Link to='/channels'>
               <motion.button
                 onClick={() => onNavigate('channels')}
                 className="bg-gradient-to-r from-sky-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 hover:from-sky-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
+              
                 <Play className="w-5 h-5" />
                 <span>Explore Channels</span>
                 <ArrowRight className="w-5 h-5" />
+                
               </motion.button>
-
+                </Link>
               <motion.button
                 onClick={handleWhatsAppClick}
                 className="bg-white text-sky-600 px-8 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 border-2 border-sky-200 hover:bg-sky-50 transition-all duration-300 shadow-lg hover:shadow-xl"
@@ -173,28 +176,28 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
               {/* Floating Stats */}
               <motion.div
-                className="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-xl border border-gray-100"
+                className="absolute -top-16 -right-4 bg-white rounded-2xl p-4 shadow-xl border border-gray-100"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1, duration: 0.5 }}
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="flex items-center space-x-2">
+                <div className="flex   items-center space-x-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                   <span className="text-sm font-medium text-gray-600">Available Now</span>
                 </div>
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-4 -left-4 bg-white rounded-2xl p-4 shadow-xl border border-gray-100"
+                className="absolute -bottom-20 -left-12 bg-white rounded-2xl p-4 shadow-xl border border-gray-100"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.2, duration: 0.5 }}
                 whileHover={{ scale: 1.05 }}
               >
                 <div className="text-center">
-                  <div className="text-lg font-bold text-gray-800">2+ Years</div>
-                  <div className="text-sm text-gray-500">Experience</div>
+                  <div className="text-md font-bold text-gray-800">6+ Years <span className='font-normal'>Experience</span></div>
+                
                 </div>
               </motion.div>
 

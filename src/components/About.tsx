@@ -7,7 +7,7 @@ const About: React.FC = () => {
     const message = encodeURIComponent(
       "Hi Abbas! I'd like to learn more about your YouTube channel services. Can we chat?"
     );
-    window.open(`https://wa.me/1234567890?text=${message}`, '_blank');
+       window.open(`https://wa.me/923499891325?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const achievements = [
@@ -37,7 +37,7 @@ const About: React.FC = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            About Abbas Stock
+            About Abbas 
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Your trusted partner in the YouTube channel marketplace
@@ -54,7 +54,7 @@ const About: React.FC = () => {
           >
             <div className="relative z-10">
               <img
-                src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop"
+                src="https://firebasestorage.googleapis.com/v0/b/inner-bliss-65eb3.appspot.com/o/channel_screenshots%2Fabbas.jpg?alt=media&token=b8406538-a43f-4fc8-b502-2eb6cd984dd1"
                 alt="Abbas Stock"
                 className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
               />
@@ -74,7 +74,7 @@ const About: React.FC = () => {
             </h3>
             <div className="space-y-4 text-gray-600 mb-8">
               <p>
-                With over 2 years of experience in the YouTube ecosystem, I've helped hundreds of 
+                With over 6 years of experience in the YouTube ecosystem, I've helped hundreds of 
                 entrepreneurs and content creators navigate the complex world of channel acquisition and sales.
               </p>
               <p>

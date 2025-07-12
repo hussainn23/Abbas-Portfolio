@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, MessageCircle, Send, Clock, CheckCircle } from 'lucide-react';
-
+import { collection} from "firebase/firestore";
+import { db } from "../firebase.ts";
+import { addDoc } from "firebase/firestore";
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -19,23 +21,34 @@ const Contact: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    await addDoc(collection(db, "contact"), {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      timestamp: new Date()  // optional: helpful to track time
+    });
+
     setIsSubmitted(true);
     setFormData({ name: '', email: '', subject: '', message: '' });
-  };
+  } catch (error) {
+    console.error("Error submitting contact form:", error);
+    alert("Something went wrong. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent(
       "Hi Abbas! I'd like to get in touch with you about your YouTube channel services."
     );
-    window.open(`https://wa.me/1234567890?text=${message}`, '_blank');
+     window.open(`https://wa.me/923499891325?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const contactInfo = [
@@ -48,8 +61,8 @@ const Contact: React.FC = () => {
     {
       icon: Phone,
       title: 'Phone',
-      value: '+1 (555) 123-4567',
-      action: 'tel:+15551234567'
+      value: '+92 3499891325',
+      action: 'tel:+923499891325'
     },
     {
       icon: MapPin,

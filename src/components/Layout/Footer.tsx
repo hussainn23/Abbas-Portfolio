@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Youtube, Instagram, MessageCircle, Mail, Phone } from 'lucide-react';
+import { Youtube, Instagram , Mail, Phone, Facebook } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
+const year = new Date(Date.now()).getFullYear();
   return (
     <motion.footer 
       className="bg-gray-900 text-white py-12"
@@ -40,10 +42,10 @@ const Footer: React.FC = () => {
           >
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#home" className="text-gray-400 hover:text-sky-400 transition-colors">Home</a></li>
-              <li><a href="#channels" className="text-gray-400 hover:text-sky-400 transition-colors">Channels</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-sky-400 transition-colors">About</a></li>
-              <li><a href="#contact" className="text-gray-400 hover:text-sky-400 transition-colors">Contact</a></li>
+              <li><Link to="/" className="text-gray-400 hover:text-sky-400 transition-colors">Home</Link></li>
+              <li><Link to="/channels" className="text-gray-400 hover:text-sky-400 transition-colors">Channels</Link></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-sky-400 transition-colors">About</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-sky-400 transition-colors">Contact</Link></li>
             </ul>
           </motion.div>
 
@@ -81,11 +83,9 @@ const Footer: React.FC = () => {
                 <span className="text-gray-400">+92 349 9891325</span>
               </div>
               <div className="flex items-center space-x-4 mt-4">
+           
                 <a href="#" className="text-gray-400 hover:text-sky-400 transition-colors">
-                  <MessageCircle className="w-5 h-5" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-sky-400 transition-colors">
-                  <Youtube className="w-5 h-5" />
+                  <Facebook className="w-5 h-5" />
                 </a>
                 <a href="#" className="text-gray-400 hover:text-sky-400 transition-colors">
                   <Instagram className="w-5 h-5" />
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
           transition={{ delay: 0.5 }}
           viewport={{ once: true }}
         >
-          <p>&copy; 2024 Abbas Stock. All rights reserved. | Privacy Policy | Terms of Service</p>
+          <p>&copy; {year} Abbas Stock. All rights reserved. | Privacy Policy | Terms of Service</p>
           <p className="mt-2">Powered by Abbas Stock</p>
         </motion.div>
       </div>
