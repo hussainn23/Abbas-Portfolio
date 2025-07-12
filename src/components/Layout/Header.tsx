@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Youtube } from 'lucide-react';
+import { Menu, X, } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-
+import logo from '../../../assets/images/abbaslogoo.png'
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -28,10 +28,10 @@ const Header: React.FC = () => {
             className="flex items-center space-x-2 cursor-pointer"
             whileHover={{ scale: 1.05 }}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-sky-400 to-sky-600 rounded-lg flex items-center justify-center">
-              <Youtube className="w-6 h-6 text-white" />
+            <div className="w-[80px] h-10  rounded-lg flex items-center justify-center">
+           <img  src={logo}/>
             </div>
-            <span className="text-xl font-bold text-gray-800">Abbas</span>
+            <span className="text-xl font-bold text-gray-800">Abbas Stock</span>
           </motion.div>
 
           {/* Desktop Navigation */}

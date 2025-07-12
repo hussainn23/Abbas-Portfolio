@@ -208,9 +208,9 @@ const ChannelModal: React.FC<ChannelModalProps> = ({ channel, onClose }) => {
                 <div className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl p-4">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Purchase Price</span>
+                      <span className="text-gray-600">Sale Price</span>
               
-                      <span className="font-medium">${channel.purchasePrice}</span>
+                      <span className="font-medium">${channel.salePrice}</span>
                     </div>
                 
                   </div>

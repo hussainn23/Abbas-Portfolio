@@ -1,9 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Youtube, Instagram , Mail, Phone, Facebook } from 'lucide-react';
+import { Mail, Phone, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
+import logo from '../../../assets/images/abbasStock.png'
 const Footer: React.FC = () => {
+   const handlefacebookClick = () => {
+ 
+    window.open('https://www.facebook.com/ghulam.abbas.549794', '_blank');
+  };
 const year = new Date(Date.now()).getFullYear();
   return (
     <motion.footer 
@@ -23,12 +27,12 @@ const year = new Date(Date.now()).getFullYear();
             viewport={{ once: true }}
           >
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-400 to-sky-600 rounded-lg flex items-center justify-center">
-                <Youtube className="w-6 h-6 text-white" />
-              </div>
+              <div className="w-[80px] h-[30px]  rounded-lg flex items-center justify-center">
+           <img  src={logo} className='rounded-lg'/>
+            </div>
               <span className="text-xl font-bold">Abbas Stock</span>
             </div>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm pt-4">
               Your trusted partner in YouTube channel trading. Professional, secure, and reliable.
             </p>
           </motion.div>
@@ -84,12 +88,10 @@ const year = new Date(Date.now()).getFullYear();
               </div>
               <div className="flex items-center space-x-4 mt-4">
            
-                <a href="#" className="text-gray-400 hover:text-sky-400 transition-colors">
+                <a onClick={handlefacebookClick} className="text-gray-400 hover:text-sky-400 transition-colors">
                   <Facebook className="w-5 h-5" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-sky-400 transition-colors">
-                  <Instagram className="w-5 h-5" />
-                </a>
+            
               </div>
             </div>
           </motion.div>

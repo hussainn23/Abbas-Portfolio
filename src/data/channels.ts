@@ -16,7 +16,6 @@
   adsenseType:string;
   violation:string;
   channelUrl:string;
-  purchasePrice:String;
   channelAge:string
 
 }

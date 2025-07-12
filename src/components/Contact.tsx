@@ -67,13 +67,13 @@ const Contact: React.FC = () => {
     {
       icon: MapPin,
       title: 'Location',
-      value: 'New York, USA',
+      value: 'Sargodha, Pakistan',
       action: null
     },
     {
       icon: Clock,
       title: 'Business Hours',
-      value: 'Mon-Fri: 9AM-6PM EST',
+      value: '24/7',
       action: null
     }
   ];

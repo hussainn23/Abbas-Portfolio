@@ -36,7 +36,6 @@ const ChannelGrid: React.FC = () => {
             channelAge:data.channelAge,
             contentType:data.contentType,
             violation:data.violation,
-            purchasePrice:data.purchasePrice,
             channelUrl:data.channelUrl,
             adsenseType: data.adsenseType || "", 
             channelProfile:data.channelProfile
@@ -55,8 +54,8 @@ const ChannelGrid: React.FC = () => {
 const filteredChannels = channels.filter((channel) => {
  const statusMatch =
     filterStatus === "all" ||
-    (filterStatus === "sold" && channel.status === "purchased") ||
-    (filterStatus === "available" && channel.status !== "purchased");
+    (filterStatus === "sold" && channel.status !== "purchased") ||
+    (filterStatus === "available" && channel.status === "purchased");
 
   const monetizationMatch =
     filterMonetization === "all" ||
